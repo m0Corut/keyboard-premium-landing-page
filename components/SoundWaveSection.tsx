@@ -267,10 +267,10 @@ export default function SoundWaveSection() {
                 audioCtx.resume();
                 setIsAudioUnlocked(true);
               }}
-              className="group relative flex items-center gap-3 bg-orange-500/10 border border-orange-500/50 px-8 py-4 rounded-full text-orange-500 font-bold uppercase tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all animate-pulse pointer-events-auto shadow-glow"
+              className="group relative flex items-center gap-3 bg-white/10 border border-orange-500 px-10 py-5 rounded-full text-orange-500 font-black uppercase tracking-[0.3em] hover:bg-orange-500 hover:text-white transition-all animate-pulse pointer-events-auto shadow-[0_0_30px_rgba(249,115,22,0.4)]"
             >
-              <span className="relative z-10">Activate Sound</span>
-              <div className="absolute inset-0 rounded-full bg-orange-500/20 blur-xl group-hover:blur-2xl transition-all" />
+              <span className="relative z-10">ENABLE 3D AUDIO</span>
+              <div className="absolute inset-0 rounded-full bg-orange-500/10 blur-2xl group-hover:blur-3xl transition-all" />
             </button>
           ) : (
             <p className="text-xl md:text-3xl text-orange-500 font-medium tracking-[0.2em] uppercase animate-in fade-in slide-in-from-bottom-4 duration-1000">

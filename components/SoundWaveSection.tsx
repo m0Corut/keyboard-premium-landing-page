@@ -207,8 +207,29 @@ export default function SoundWaveSection() {
     }, container);
 
 
+    // Global interaction listener to unlock audio
+    const unlockAudio = () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      // Remove listeners once unlocked
+      window.removeEventListener("mousedown", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
+
+    window.addEventListener("mousedown", unlockAudio);
+    window.addEventListener("touchstart", unlockAudio);
+    window.addEventListener("keydown", unlockAudio);
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousedown", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
       if (animationId) cancelAnimationFrame(animationId);
       trigger.kill();
       ctxText.revert();

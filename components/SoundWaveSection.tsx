@@ -14,6 +14,8 @@ export default function SoundWaveSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
+  const [isAudioUnlocked, setIsAudioUnlocked] = React.useState(false);
+
   // Sound Generation Logic (The "Thock")
   const playThock = () => {
     if (!audioCtx) {
@@ -22,6 +24,7 @@ export default function SoundWaveSection() {
     if (audioCtx.state === "suspended") {
         audioCtx.resume();
     }
+    if (!isAudioUnlocked) setIsAudioUnlocked(true);
 
     const t = audioCtx.currentTime;
 
@@ -215,6 +218,7 @@ export default function SoundWaveSection() {
       if (audioCtx.state === "suspended") {
         audioCtx.resume();
       }
+      setIsAudioUnlocked(true);
       // Remove listeners once unlocked
       window.removeEventListener("mousedown", unlockAudio);
       window.removeEventListener("touchstart", unlockAudio);
@@ -247,13 +251,30 @@ export default function SoundWaveSection() {
         className="absolute top-0 left-0 w-full h-full opacity-80 pointer-events-none"
       />
       
-      <div ref={textRef} className="relative z-10 text-center px-4 mix-blend-difference select-none pointer-events-none">
+      <div ref={textRef} className="relative z-10 text-center px-4 mix-blend-difference select-none flex flex-col items-center">
         <h2 className="text-7xl md:text-9xl font-bold tracking-tighter text-white mb-2">
           THOCK.
         </h2>
-        <p className="text-xl md:text-3xl text-orange-500 font-medium tracking-[0.2em] uppercase">
-          Scroll to Type
-        </p>
+        
+        <div className="mt-4 transition-all duration-500">
+          {!isAudioUnlocked ? (
+            <button 
+              onClick={() => {
+                if (!audioCtx) audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+                audioCtx.resume();
+                setIsAudioUnlocked(true);
+              }}
+              className="group relative flex items-center gap-3 bg-orange-500/10 border border-orange-500/50 px-8 py-4 rounded-full text-orange-500 font-bold uppercase tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all animate-pulse pointer-events-auto shadow-glow"
+            >
+              <span className="relative z-10">Activate Sound</span>
+              <div className="absolute inset-0 rounded-full bg-orange-500/20 blur-xl group-hover:blur-2xl transition-all" />
+            </button>
+          ) : (
+            <p className="text-xl md:text-3xl text-orange-500 font-medium tracking-[0.2em] uppercase animate-in fade-in slide-in-from-bottom-4 duration-1000">
+              Scroll to Type
+            </p>
+          )}
+        </div>
       </div>
     </section>
   );

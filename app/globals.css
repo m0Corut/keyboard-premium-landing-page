@@ -142,10 +142,10 @@ html.lenis, html.lenis body {
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05); /* Slightly darker for contrast */
+  backdrop-filter: blur(10px); /* Reduced from 20px */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Text Gradient */

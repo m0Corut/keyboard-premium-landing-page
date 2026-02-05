@@ -56,18 +56,12 @@ export default function HorizontalGallery() {
         {
           x: -scrollWidth,
           ease: "none",
-          force3D: true, // GPU Acceleration
+          force3D: true, 
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: 1, 
-            snap: {
-              snapTo: 1 / (galleryItems.length), // Including the intro panel, items+1 sections roughly
-              duration: { min: 0.2, max: 0.3 },
-              delay: 0,
-              ease: "power1.inOut"
-            },
+            scrub: 0.5, // Reduced for tighter response
             invalidateOnRefresh: true,
           }
         }
@@ -114,7 +108,7 @@ export default function HorizontalGallery() {
               key={item.id}
               className="w-screen h-full flex items-center justify-center p-8 md:p-20 flex-shrink-0 bg-bg-primary border-r border-white/5"
             >
-              <div className="relative w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden glass-strong border border-white/10 flex flex-col md:flex-row shadow-2xl group hover-lift">
+              <div className="relative w-full max-w-6xl h-[70vh] rounded-3xl overflow-hidden glass-strong border border-white/10 flex flex-col md:flex-row shadow-xl group hover-lift">
                 
                 {/* Visual Side with Real Image */}
                 <div className="w-full md:w-1/2 h-full bg-black/50 relative overflow-hidden">

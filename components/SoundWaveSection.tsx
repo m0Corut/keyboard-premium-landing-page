@@ -14,7 +14,7 @@ export default function SoundWaveSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
-  const [isAudioUnlocked, setIsAudioUnlocked] = React.useState(false);
+  const [manualUnlockDone, setManualUnlockDone] = React.useState(false);
 
   // Sound Generation Logic (The "Thock")
   const playThock = () => {
@@ -260,12 +260,12 @@ export default function SoundWaveSection() {
         </h2>
         
         <div className="mt-4 transition-all duration-500">
-          {!isAudioUnlocked ? (
+          {!manualUnlockDone ? (
             <button 
               onClick={() => {
                 if (!audioCtx) audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
                 audioCtx.resume();
-                setIsAudioUnlocked(true);
+                setManualUnlockDone(true);
               }}
               className="group relative flex items-center gap-3 bg-white/10 border border-orange-500 px-10 py-5 rounded-full text-orange-500 font-black uppercase tracking-[0.3em] hover:bg-orange-500 hover:text-white transition-all animate-pulse pointer-events-auto shadow-[0_0_30px_rgba(249,115,22,0.4)]"
             >

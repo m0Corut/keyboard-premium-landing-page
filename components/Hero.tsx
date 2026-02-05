@@ -37,50 +37,57 @@ export default function Hero() {
     };
   }, [isLoaded]);
 
-  // Preload images with minimum display time
+  // Preload images with priority batching
   useEffect(() => {
     let loadedCount = 0;
     const imgs: HTMLImageElement[] = [];
-    const minLoadTime = 2000;
+    const minLoadTime = 1000;
     const startTime = Date.now();
+    
+    const priorityBatchCount = 30; // Load first 30 frames to show the experience
 
     const loadImages = async () => {
-      const promises = [];
-      
-      for (let i = 1; i <= 192; i++) {
-        const promise = new Promise<void>((resolve) => {
+      // 1. Load Priority Batch
+      const priorityPromises = [];
+      for (let i = 1; i <= priorityBatchCount; i++) {
+        priorityPromises.push(new Promise<void>((resolve) => {
           const img = new Image();
           const frameNumber = String(i).padStart(5, "0");
-          img.src = `/frames/${frameNumber}.png`;
-          
+          img.src = `/frames/${frameNumber}.webp`; // Updated to WEBP
           img.onload = () => {
             loadedCount++;
-            setLoadProgress(Math.round((loadedCount / 192) * 100));
+            setLoadProgress(Math.round((loadedCount / priorityBatchCount) * 100));
             resolve();
           };
-          
-          img.onerror = () => {
-            console.warn(`Frame ${i} failed to load`);
-            loadedCount++; 
-            resolve();
-          };
-          
+          img.onerror = () => resolve();
           imgs[i-1] = img;
-        });
-        promises.push(promise);
+        }));
       }
 
-      await Promise.all(promises);
-      
+      await Promise.all(priorityPromises);
+
+      // Early unlock
       const elapsed = Date.now() - startTime;
       const remaining = Math.max(0, minLoadTime - elapsed);
-      
-      if (remaining > 0) {
-        await new Promise(resolve => setTimeout(resolve, remaining));
-      }
+      if (remaining > 0) await new Promise(resolve => setTimeout(resolve, remaining));
 
-      setImages(imgs);
+      setImages([...imgs]);
       setIsLoaded(true);
+
+      // 2. Load the rest in the background
+      for (let i = priorityBatchCount + 1; i <= 192; i++) {
+        const img = new Image();
+        const frameNumber = String(i).padStart(5, "0");
+        img.src = `/frames/${frameNumber}.webp`;
+        img.onload = () => {
+            imgs[i-1] = img;
+            // Update state periodically or just rely on the reference if we were using one
+            // Here we update state to trigger re-render for those frames
+            if (i % 20 === 0 || i === 192) {
+                setImages([...imgs]);
+            }
+        };
+      }
     };
 
     loadImages();

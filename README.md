@@ -1,201 +1,172 @@
-[Previous README Content in English including MIT License]
+<div align="center">
+
+# KeyCloud | Premium Mechanical Keyboard Experience
+
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge&logo=vercel)](https://your-demo-link.com)
+[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2014%20•%20TypeScript%20•%20GSAP%20•%20Tailwind-blue?style=for-the-badge)](https://nextjs.org)
+
+<p align="center">
+  <a href="#tr-türkçe-proje-dokümantasyonu">🇹🇷 TÜRKÇE DOKÜMANTASYON</a> &nbsp;|&nbsp; 
+  <a href="#en-english-project-documentation">🇬🇧 ENGLISH DOCUMENTATION</a>
+</p>
+
+</div>
 
 ---
 
-# [TR] KeyCloud | Premium Mekanik Klavye Deneyimi
+# [TR] Türkçe Proje Dokümantasyonu
 
-![Proje Durumu](https://img.shields.io/badge/Durum-Yay%C4%B1na%20Haz%C4%B1r-success)
-![Teknoloji Yığını](https://img.shields.io/badge/Tech-Next.js%20%7C%20TypeScript%20%7C%20GSAP%20%7C%20Tailwind-blue)
+Ödül alabilecek kalitede (`Awwwards`), hikaye anlatımı odaklı ve yüksek performanslı bir mekanik klavye tanıtım sitesi. Bu proje, standart bir web sitesinden ziyade, **fizik tabanlı etkileşimler, gerçek zamanlı ses sentezi ve sinematik kaydırma deneyimi** sunan interaktif bir sanat eseridir.
 
-Üst düzey bir mekanik klavye için tasarlanmış, Awwwards kalitesinde, hikaye odaklı ve sürükleyici bir açılış sayfası. Bu proje, sadece bir arayüz tasarımından öte, performans, pürüzsüz animasyonlar ve duyusal kullanıcı etkileşimine odaklanan ileri düzey frontend tekniklerini sergiler.
+**İş Verenler İçin Not:** Bu proje, sadece arayüz kodlaması değil; **performans mimarisi, GPU optimizasyonu, Canvas programlama ve gelişmiş kullanıcı deneyimi (UX)** mühendisliği yeteneklerini sergilemek amacıyla geliştirilmiştir.
 
-## 🚀 Öne Çıkan Teknik Özellikler
+## 🏗️ Proje Mimarisi ve Dosya Yapısı
 
-### 1. Gelişmiş Scroll Koreografisi (GSAP ScrollTrigger)
-Standart bir kaydırma deneyimi yerine, hikayeyi anlatan **Scroll Odaklı Animasyonlar** kullanıldı.
-- **Paralaks Efektleri:** Derinlik hissi yaratmak için çok katmanlı paralaks geçişleri.
-- **Sabitleme ve Kaydırma:** `HorizontalGallery` bileşeni, dikey kaydırmayı yatay harekete dönüştürerek kullanıcıyı teknik şemalar arasında bir yolculuğa çıkarır.
-- **Sinematik Ortaya Çıkışlar:** Metin ve öğeler, GSAP zaman çizelgeleri kullanılarak sinematik bir zamanlamayla belirir.
-
-### 2. Ses Görselleştirme ve Sentezi (Web Audio API)
-`SoundWaveSection` statik bir ses dosyası çalmaz. **Web Audio API** kullanarak gerçek zamanlı ses üretir.
-- **Prosedürel Ses:** Özel bir osilatör motoru, **Scroll Hızına** (Velocity) bağlı olarak yoğunluğu değişen bir "Thock" sesi (mekanik anahtar sesi) üretir.
-- **Reaktif Canvas:** HTML5 Canvas, kullanıcının kaydırma hızına fiziksel olarak tepki veren neon bir ses dalgası çizer.
-
-### 3. Fizik Tabanlı Etkileşimler
-Premium bir web tasarımı, "ağırlık" ve "hissiyat" gerektirir.
-- **Manyetik Butonlar:** `MagneticFooter` CTA butonu, `Vector Physics` kullanarak manyetik bir alan yaratır ve imleci kendine çekerek tok ve premium bir his verir.
-
-### 4. Üst Düzey Performans Optimizasyonu
-Ağır animasyonlara rağmen site yüksek Lighthouse skorlarına sahiptir:
-- **Code Splitting (Kod Bölme):** Ağır etkileşimli bileşenler (`SoundWaveSection`, `HorizontalGallery`) `next/dynamic` ile lazy load (tembel yükleme) edilir.
-- **Observer Sistemleri:** Canvas animasyon döngüsü (`requestAnimationFrame`), bileşen ekrandan çıktığında `IntersectionObserver` tarafından otomatik olarak durdurulur; böylece CPU ve pil tasarrufu sağlanır.
-- **GPU Hızlandırma:** Animasyonlar, render yükünü işlemciden GPU'ya aktarmak için `force3D: true` ve `will-change` ipuçlarını kullanır.
-- **Native SVG İşleme:** Vektörler için Next.js'in görsel optimizasyonu devre dışı bırakılarak gereksiz sunucu iş yükü engellendi.
-
----
-
-## 🛠 Teknoloji Yığını
-
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-- **Dil:** TypeScript
-- **Stil:** Tailwind CSS (Özel Tasarım Sistemi)
-- **Animasyon:** GSAP (GreenSock Animation Platform) Premium
-- **Grafik:** HTML5 Canvas API (2D Context)
-- **Durum Yönetimi:** React Hooks (`useRef`, `useEffect`)
-
----
-
-## 📂 Proje Yapısı ve Mimari
-
-Modülerlik ve sorumlulukların ayrılığı prensiplerine göre tasarlandı.
+Bir geliştiricinin projeye dahil olduğunda neyin nerede olduğunu ve **neden** orada olduğunu anlaması için detaylı döküm:
 
 ```bash
-├── app/
-│   ├── page.tsx            # Ana Giriş. LCP optimizasyonu için Dinamik Import'ları uygular.
-│   ├── layout.tsx          # Global Font konfigürasyonları (Space Grotesk & Inter).
-│   └── globals.css         # CSS Değişkenleri & Tailwind Direktifleri.
+/
+├── app/                        # Next.js App Router Yapısı
+│   ├── page.tsx               # [LCP Optimizasyonu] Ana sayfa. Ağır bileşenler (Dynamic Imports) ile burada lazy-load edilir.
+│   ├── layout.tsx             # Global Fontlar (Space Grotesk & Inter) ve Metadata ayarları.
+│   └── globals.css            # Tailwind direktifleri ve CSS değişkenleri.
 │
-├── components/
-│   ├── DeepDiveFeatures.tsx # Klavye katmanlarını sergileyen kompleks paralaks bölümü.
-│   ├── HorizontalGallery.tsx# Yatay kaydırma bölümü. "Sticky" pozisyonlama mantığını kullanır.
-│   ├── SoundWaveSection.tsx # Canvas & Web Audio mantığını içerir.
-│   ├── MagneticFooter.tsx   # Fizik tabanlı interaktif footer.
-│   └── ui/                  # Yeniden kullanılabilir atomik bileşenler (Butonlar, Kartlar).
+├── components/                 # Modüler Bileşen Kütüphanesi
+│   ├── Hero.tsx               # [İlk İzlenim] Açılış sekansı, video background ve staggered text animasyonları.
+│   ├── SoundWaveSection.tsx   # [Web Audio API] Scroll hızına göre değişen ses sentezi (Thock effect) ve Canvas vizualizasyonu.
+│   ├── HorizontalGallery.tsx  # [GSAP ScrollTrigger] Dikey scroll'u yatay galeriye çeviren pinleme mantığı. GPU hızlandırmalı.
+│   ├── MagneticFooter.tsx     # [Fizik Motoru] Mouse hareketine vektörel tepki veren manyetik CTA butonu.
+│   ├── DeepDiveFeatures.tsx   # [Paralaks] Çok katmanlı ürün detay anlatımı. Scroll hızına göre derinlik algısı.
+│   ├── SpecsGrid.tsx          # [Bento Grid] Teknik özellikleri modern, responsive grid yapısında sunar.
+│   ├── Testimonials.tsx       # [Infinite Marquee] Sonsuz döngülü kullanıcı yorumları animasyonu.
+│   ├── Navbar.tsx             # Scroll yönüne duyarlı, glassmorphism efektli navigasyon.
+│   ├── Loader.tsx             # Site varlıkları yüklenirken kullanıcıyı karşılayan preloader.
+│   ├── SmoothScroll.tsx       # Lenis tabanlı yumuşak kaydırma (momentum scroll) entegrasyonu.
+│   ├── Hotspot.tsx            # Ürün üzerindeki interaktif bilgi noktaları (Tooltip).
+│   ├── FinalCTA.tsx           # (Eski) Alternatif kapanış bileşeni.
+│   └── Footer.tsx             # (Eski) Standart footer bileşeni.
 │
-├── public/images/
-│   └── gallery/            # Teknik gösterim için optimize edilmiş SVG şemaları.
+├── public/
+│   ├── images/
+│   │   └── gallery/           # [SVG Optimizasyonu] Teknik şemalar vektörel formatta tutularak retina ekranlarda keskinlik sağlanır.
+│
+└── tailwind.config.ts          # Özel renk paleti (#F97316 - Neon Orange) ve tasarım sistemi tanımları.
 ```
+
+## � Teknik Özellikler ve Mühendislik Kararları
+
+### 1. Performans Mühendisliği (Web Vitals)
+*   **Code Splitting:** `SoundWaveSection` ve `HorizontalGallery` gibi işlemciyi yoran bileşenler, kullanıcının o bölüme gelmesine yakın yüklenir (`IntersectionObserver` + `nevt/dynamic`).
+*   **Main Thread Blocking Önleme:** Canvas çizimleri `requestAnimationFrame` ile yapılırken, bileşen viewport dışına çıktığı an döngü durdurulur. Bu, mobil cihazlarda pil tüketimini ve ısınmayı engeller.
+*   **GPU Offloading:** Kaydırma animasyonlarında `force3D: true` ve `will-change: transform` kullanılarak render yükü CPU'dan GPU'ya aktarılır.
+
+### 2. Audio Mühendisliği (Web Audio API)
+Sitede statik ses dosyası yoktur. "Thock" sesi, tarayıcı içinde matematiksel osilatörler kullanılarak **prosedürel olarak** üretilir.
+*   **Velocity Mapping:** Kullanıcı ne kadar hızlı kaydırırsa, sesin sıklığı ve tonu ona göre değişir. Bu, kullanıcıya "kontrol bende" hissi verir.
+
+### 3. İleri Düzey Animasyon (GSAP)
+Standart CSS geçişleri yerine GreenSock Animation Platform (GSAP) kullanılmıştır.
+*   **Scrubbing:** Animasyonlar zaman çizelgesine değil, kullanıcının kaydırma pozisyonuna (scroll progress) bağlıdır.
+*   **Pinning:** Belirli bölümler ekrana sabitlenirken içerik akmaya devam eder (Örn: Yatay Galeri).
 
 ---
 
 ## 💻 Kurulum
 
-1. **Repoyu klonlayın**
-   ```bash
-   git clone https://github.com/kullaniciadi/keycloud-experience.git
-   ```
-
-2. **Bağımlılıkları yükleyin**
-   ```bash
-   npm install
-   ```
-
-3. **Geliştirme sunucusunu başlatın**
-   ```bash
-   npm run dev
-   ```
-
-4. **Production (Canlı) için derleyin**
-   ```bash
-   npm run build
-   ```
-
----
-
-## 🎨 Tasarım Felsefesi
-Arayüz, **#F97316** (Neon Turuncu) vurguların öne çıkmasını sağlamak için **#050505** taban rengini kullanan "Dark Mode First" (Önce Karanlık Mod) estetiğini benimser. Tipografide, teknik başlıklar için **Space Grotesk** ve okunabilirlik için **Inter** kullanılmış, katı bir 8px ızgara sistemine bağlı kalınmıştır.
-
----
-
-## 📄 License (Lisans)
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-# [EN] KeyCloud | Premium Mechanical Keyboard Experience
-
-![Project Status](https://img.shields.io/badge/Status-Production%20Ready-success)
-![Tech Stack](https://img.shields.io/badge/Tech-Next.js%20%7C%20TypeScript%20%7C%20GSAP%20%7C%20Tailwind-blue)
-
-An award-winning caliber landing page designed to offer an immersive, story-driven experience for a high-end mechanical keyboard. This project demonstrates advanced frontend techniques, focusing on performance, smooth animations, and sensory user interaction.
-
-## 🚀 Key Technical Features
-
-### 1. Advanced Scroll Choreography (GSAP ScrollTrigger)
-Instead of standard scrolling, this application uses **Scroll-Driven Animations** to tell a story.
-- **Parallax Effects:** Deep dive sections use multi-layered parallax to create depth.
-- **Pinning & Scrubbing:** The `HorizontalGallery` component transforms vertical scroll into horizontal movement, locking the viewport to guide the user through technical schematics.
-- **Staggered Reveals:** Text and elements appear with cinematic timing using GSAP timelines.
-
-### 2. Audio Visualization & Synthesis (Web Audio API)
-The `SoundWaveSection` does not play a static audio file. It utilizes the **Web Audio API** to generate real-time audio.
-- **Procedural Sound:** A custom oscillator engine creates a "Thock" sound (mechanical switch actuation) that varies in density based on **Scroll Velocity**.
-- **Reactive Canvas:** An HTML5 Canvas renders a neon sound wave that physically reacts to how fast the user scrolls (Velocity-based Amplitude modulation).
-
-### 3. Physics-Based Interactions
-High-end web design requires "weight" and "feel".
-- **Magnetic Buttons:** The `MagneticFooter` CTA button uses vector physics to attract the magnetic cursor, creating a tangible, premium feel using `MouseEvents` and `GSAP`.
-
-### 4. Extreme Performance Optimization
-Despite the heavy animations, the site achieves high Lighthouse scores through:
-- **Code Splitting:** Heavy interactive components (`SoundWaveSection`, `HorizontalGallery`) are lazily loaded with `next/dynamic`.
-- **Observer Systems:** The Canvas animation loop (`requestAnimationFrame`) automatically pauses when the component leaves the viewport using `IntersectionObserver`, saving CPU/Battery.
-- **GPU Acceleration:** Animations utilize `force3D: true` and `will-change` hints to offload rendering to the GPU.
-- **Native SVG Handling:** bypassed Next.js image optimization for vectors to prevent unnecessary server processing overhead.
-
----
-
-## 🛠 Tech Stack
-
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS (Custom Design System)
-- **Animation:** GSAP (GreenSock Animation Platform) Premium
-- **Graphics:** HTML5 Canvas API (2D Context)
-- **State Management:** React Hooks (`useRef`, `useEffect`)
-
----
-
-## 📂 Project Structure & Architecture
-
-Designed with modularity and separation of concerns in mind.
+Projeyi kendi bilgisayarınızda çalıştırmak için:
 
 ```bash
-├── app/
-│   ├── page.tsx            # Main Entry. Implements Dynamic Imports for LCP optimization.
-│   ├── layout.tsx          # Global Font configurations (Space Grotesk & Inter).
-│   └── globals.css         # CSS Variables & Tailwind Directives.
-│
-├── components/
-│   ├── DeepDiveFeatures.tsx # Complex parallax section showcasing keyboard layers.
-│   ├── HorizontalGallery.tsx# Horizontal scroll section. Uses "Sticky" positioning logic.
-│   ├── SoundWaveSection.tsx # Contains the Canvas & Web Audio logic.
-│   ├── MagneticFooter.tsx   # Physics-based interactive footer.
-│   └── ui/                  # Reusable atomic components (Buttons, Cards).
-│
-├── public/images/
-│   └── gallery/            # Optimized SVG schematics for technical showcase.
+# 1. Repoyu klonlayın
+git clone https://github.com/m0Corut/keyboard-premium-landing-page.git
+
+# 2. Klasöre girin
+cd keyboard-premium-landing-page
+
+# 3. Bağımlılıkları yükleyin
+npm install
+
+# 4. Geliştirme sunucusunu başlatın
+npm run dev
 ```
+
+---
+
+<br>
+<br>
+
+# [EN] English Project Documentation
+
+A premium, Awwwards-caliber landing page for a high-end mechanical keyboard. This project is built to demonstrate **advanced frontend engineering**, focusing on physics-based interactions, procedural audio synthesis, and cinematic storytelling through code.
+
+**Note for Recruiters:** This repository showcases capabilities in **Performance Architecture, GPU Optimization, Creative Coding (Canvas), and Advanced UX Engineering**.
+
+## 🏗️ Project Architecture & File Anatomy
+
+A complete breakdown for developers to understand the "What" and "Why" of the codebase:
+
+```bash
+/
+├── app/                        # Next.js App Router Structure
+│   ├── page.tsx               # [LCP Optimized] Main Entry. Heavy components are lazy-loaded here using Dynamic Imports.
+│   ├── layout.tsx             # Global Fonts (Space Grotesk & Inter) and SEO Metadata.
+│   └── globals.css            # Tailwind directives and CSS variables.
+│
+├── components/                 # Modular Component Library
+│   ├── Hero.tsx               # [First Impression] Opening sequence, video background, and staggered text reveals.
+│   ├── SoundWaveSection.tsx   # [Web Audio API] Procedural sound synthesis (Thock effect) & breakdown of the Canvas setup.
+│   ├── HorizontalGallery.tsx  # [GSAP ScrollTrigger] Transforms vertical scroll logic into a horizontal timeline. GPU accelerated.
+│   ├── MagneticFooter.tsx     # [Physics Engine] CTA button that reacts to mouse vectors with magnetic pull.
+│   ├── DeepDiveFeatures.tsx   # [Parallax] Multi-layer product breakdown. Depth perception based on scroll velocity.
+│   ├── SpecsGrid.tsx          # [Bento Grid] Technical specifications presented in a modern, responsive grid.
+│   ├── Testimonials.tsx       # [Infinite Marquee] Smooth, infinite scrolling loop of user reviews.
+│   ├── Navbar.tsx             # Scroll-direction aware navigation with glassmorphism support.
+│   ├── Loader.tsx             # Initial preloader to ensure assets are ready before the experience starts.
+│   ├── SmoothScroll.tsx       # Lenis-based momentum scrolling wrapper.
+│   ├── Hotspot.tsx            # Interactive tooltips on product images.
+│   ├── FinalCTA.tsx           # (Legacy) Alternative footer component.
+│   └── Footer.tsx             # (Legacy) Standard footer component.
+│
+├── public/
+│   ├── images/
+│   │   └── gallery/           # [SVG Optimized] Technical schematics kept in vector format for sharpness.
+│
+└── tailwind.config.ts          # Custom Design System configuration (Colors, Typography).
+```
+
+## 🚀 Engineering Highlights
+
+### 1. Performance Architecture (Web Vitals)
+*   **Strategic Lazy Loading:** Heavy interactive sections (`SoundWaveSection`, `HorizontalGallery`) are isolated and loaded only when approaching the viewport.
+*   **Main Thread Optimization:** The Canvas animation loop is strictly managed via `IntersectionObserver`. It pauses immediately when off-screen to prevent battery drain.
+*   **Compositor Layers:** Animations utilize `force3D: true` and hardware acceleration hints (`will-change`) to ensure 60fps performance even on lower-end devices.
+
+### 2. Audio Engineering (Web Audio API)
+No static audio files are used for interactions. The "Thock" sound is generated **prosedurally** in real-time.
+*   **Velocity Mapping:** The output audio density tracks the user's scroll velocity. Faster scrolling creates a typing-like rhythm.
+
+### 3. Advanced Choreography (GSAP)
+Beyond simple fade-ins, this project uses complex timelines tied to user interaction.
+*   **Scrubbing & Pinning:** The interface locks and scrubs through animations based on precise scroll progress, giving users frame-by-frame control over the narrative suitable for technical product showcases.
 
 ---
 
 ## 💻 Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/keycloud-experience.git
-   ```
+To run this project locally:
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/m0Corut/keyboard-premium-landing-page.git
 
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
+# 2. Navigate to directory
+cd keyboard-premium-landing-page
 
-4. **Build for Production**
-   ```bash
-   npm run build
-   ```
+# 3. Install dependencies
+npm install
 
----
-
-## 🎨 Design Philosophy
-The UI follows a "Dark Mode First" aesthetic, utilizing `#050505` as the base to make the `#F97316` (Neon Orange) accents pop. Typography is handled by **Space Grotesk** for technical headings and **Inter** for readability, adhering to a strict 8px grid system.
+# 4. Run development server
+npm run dev
+```
 
 ---
 

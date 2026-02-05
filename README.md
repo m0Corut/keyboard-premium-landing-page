@@ -3,7 +3,7 @@
 # KeyCloud | Premium Mechanical Keyboard Experience
 
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=for-the-badge&logo=vercel)](https://your-demo-link.com)
-[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2014%20•%20TypeScript%20•%20GSAP%20•%20Tailwind-blue?style=for-the-badge)](https://nextjs.org)
+[![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2016%20•%20TypeScript%20•%20GSAP%20•%20Tailwind-blue?style=for-the-badge)](https://nextjs.org)
 
 <p align="center">
   <a href="#tr-türkçe-proje-dokümantasyonu">🇹🇷 TÜRKÇE DOKÜMANTASYON</a> &nbsp;|&nbsp; 
@@ -56,7 +56,7 @@ Bir geliştiricinin projeye dahil olduğunda neyin nerede olduğunu ve **neden**
 ## � Teknik Özellikler ve Mühendislik Kararları
 
 ### 1. Performans Mühendisliği (Web Vitals)
-*   **Code Splitting:** `SoundWaveSection` ve `HorizontalGallery` gibi işlemciyi yoran bileşenler, kullanıcının o bölüme gelmesine yakın yüklenir (`IntersectionObserver` + `nevt/dynamic`).
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
 *   **Main Thread Blocking Önleme:** Canvas çizimleri `requestAnimationFrame` ile yapılırken, bileşen viewport dışına çıktığı an döngü durdurulur. Bu, mobil cihazlarda pil tüketimini ve ısınmayı engeller.
 *   **GPU Offloading:** Kaydırma animasyonlarında `force3D: true` ve `will-change: transform` kullanılarak render yükü CPU'dan GPU'ya aktarılır.
 
@@ -138,7 +138,7 @@ A complete breakdown for developers to understand the "What" and "Why" of the co
 ### 1. Performance Architecture (Web Vitals)
 *   **Strategic Lazy Loading:** Heavy interactive sections (`SoundWaveSection`, `HorizontalGallery`) are isolated and loaded only when approaching the viewport.
 *   **Main Thread Optimization:** The Canvas animation loop is strictly managed via `IntersectionObserver`. It pauses immediately when off-screen to prevent battery drain.
-*   **Compositor Layers:** Animations utilize `force3D: true` and hardware acceleration hints (`will-change`) to ensure 60fps performance even on lower-end devices.
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Turbopack)
 
 ### 2. Audio Engineering (Web Audio API)
 No static audio files are used for interactions. The "Thock" sound is generated **prosedurally** in real-time.

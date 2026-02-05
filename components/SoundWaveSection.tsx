@@ -218,7 +218,9 @@ export default function SoundWaveSection() {
       if (audioCtx.state === "suspended") {
         audioCtx.resume();
       }
-      setIsAudioUnlocked(true);
+      // Note: We DON'T set isAudioUnlocked(true) here anymore 
+      // so the button stays until the user sees this section.
+      
       // Remove listeners once unlocked
       window.removeEventListener("mousedown", unlockAudio);
       window.removeEventListener("touchstart", unlockAudio);

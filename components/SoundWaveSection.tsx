@@ -24,7 +24,8 @@ export default function SoundWaveSection() {
     if (audioCtx.state === "suspended") {
         audioCtx.resume();
     }
-    if (!isAudioUnlocked) setIsAudioUnlocked(true);
+    // REMOVED: setIsAudioUnlocked(true) from here. 
+    // The button must stay until manually dismissed.
 
     const t = audioCtx.currentTime;
 
